@@ -4,7 +4,7 @@
 <head>
     <script src="sdk/scripts/VSS.SDK.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -47,7 +47,10 @@
                     <header>
                         <h1 class="fw-bold lh-1 mb-3">{{apiAddress}} K8S Cluster</h1>
                     </header>
-                    <button type="button" class="btn btn-danger" @click="Logout()">Logout</button>
+                    <div>
+                        <button type="button" class="btn btn-success m-2" @click="Refresh()">Refresh Datas</button>
+                        <button type="button" class="btn btn-danger" @click="Logout()">Logout</button>
+                    </div>
                 </div>
             </div>
             <div class="row border rounded p-5">
@@ -71,7 +74,11 @@
                                             </thead>
                                             <tbody>
                                                 <tr v-for="item in metricItems" :key="item.nodeName">
-                                                    <td>{{ item.nodeName }}</td>
+                                                    <td>
+                                                        <img class="border border-warning rounded-circle"
+                                                            src="./svg/nd.svg" alt="Nd" width="16" height="16">
+                                                        {{ item.nodeName }}
+                                                    </td>
                                                     <td>{{ item.cpuUsage }}</td>
                                                     <td>{{ item.memoryUsage }}</td>
                                                 </tr>
@@ -90,17 +97,22 @@
                                                     <div class="col" v-for="item in namespaceItems" :key="item">
                                                         <div class="card mb-3">
                                                             <div class="card-body">
-                                                                <h5 class="card-title">{{ item }}</h5>
+                                                                <h5 class="card-title">
+                                                                    <img class="border border-danger rounded-circle"
+                                                                        src="./svg/ns.svg" alt="Ns" width="16"
+                                                                        height="16">
+                                                                    {{ item }}
+                                                                </h5>
                                                                 <div
                                                                     class="d-grid gap-2 d-md-flex justify-content-md-start">
                                                                     <button type="button"
                                                                         class="btn btn-primary me-md-2"
-                                                                        @click="handleDeployments(item)">Deployments</button>
+                                                                        @click="HandleDeployments(item)">Deployments</button>
                                                                     <button type="button"
                                                                         class="btn btn-secondary me-md-2"
-                                                                        @click="handlePods(item)">Pods</button>
+                                                                        @click="HandlePods(item)">Pods</button>
                                                                     <button type="button" class="btn btn-success"
-                                                                        @click="handleServices(item)">Services</button>
+                                                                        @click="HandleServices(item)">Services</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -129,18 +141,22 @@
                                 <div v-if="area=='deployments'">
                                     <div class="card m-5" v-for="item in deploymentItems" :key="item">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ item }}</h5>
+                                            <h5 class="card-title">
+                                                <img class="border border-primary rounded-circle" src="./svg/dp.svg"
+                                                    alt="Dp" width="16" height="16">
+                                                {{ item }}
+                                            </h5>
                                             <div class="row">
                                                 <div class="col">
                                                     <button type="button" class="btn btn-success"
-                                                        @click="restartDeployment(item)">Restart</button>
+                                                        @click="RestartDeployment(item)">Restart</button>
                                                 </div>
                                                 <div class="col">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="Target"
                                                             id="target" v-model="target">
                                                         <button type="button" class="btn btn-success"
-                                                            @click="scaleDeployment(item)">Scale</button>
+                                                            @click="ScaleDeployment(item)">Scale</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -155,9 +171,13 @@
                                 <div v-if="area=='pods'">
                                     <div class="card m-5" v-for="item in podItems" :key="item">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ item }}</h5>
+                                            <h5 class="card-title">
+                                                <img class="border border-secondary rounded-circle" src="./svg/pod.svg"
+                                                    alt="Pod" width="16" height="16">
+                                                {{ item }}
+                                            </h5>
                                             <button type="button" class="btn btn-primary"
-                                                @click="handleLogs(item)">Logs</button>
+                                                @click="HandleLogs(item)">Logs</button>
                                         </div>
                                     </div>
                                     <div v-if="!podItems.length" class="card m-5">
@@ -172,7 +192,11 @@
                                 <div v-if="area=='services'">
                                     <div class="card m-5" v-for="item in serviceItems" :key="item">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ item }}</h5>
+                                            <h5 class="card-title">
+                                                <img class="border border-success rounded-circle" src="./svg/svc.svg"
+                                                    alt="Svc" width="16" height="16">
+                                                {{ item }}
+                                            </h5>
                                             <form>
                                                 <div class="mb-3">
                                                     <label for="port" class="form-label">Port</label>
@@ -184,7 +208,7 @@
                                                 </div>
                                             </form>
                                             <button type="button" class="btn btn-primary"
-                                                @click="handleIngress(item)">Add
+                                                @click="HandleIngress(item)">Add
                                                 Ingress</button>
                                         </div>
                                     </div>
@@ -266,17 +290,18 @@
                 }
             },
             methods: {
-                async fetchNodeMetrics() {
+                async FetchNodeMetrics() {
                     try {
                         const response = await this.api.get('/Info/metrics');
                         this.metricItems = response.data; // Assuming the data is an array
                         this.metricsData = ''; // Clear the loading message after data is fetched
+
                     } catch (error) {
                         console.error('Error fetching data:', error);
                         this.metricsData = 'Failed to load data.';
                     }
                 },
-                async fetchNamespaces() {
+                async FetchNamespaces() {
                     try {
                         const response = await this.api.get('/Info/namespaces');
                         this.namespaceItems = response.data; // Assuming the data is an array
@@ -284,7 +309,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async fetchDeployments() {
+                async FetchDeployments() {
                     try {
                         const response = await this.api.get('/Info/deployments?namespaceName=' + this.selectedNamespace);
                         this.deploymentItems = response.data; // Assuming the data is an array
@@ -292,7 +317,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async fetchPods() {
+                async FetchPods() {
                     try {
                         const response = await this.api.get('/Info/pods?namespaceName=' + this.selectedNamespace);
                         this.podItems = response.data; // Assuming the data is an array
@@ -300,7 +325,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async fetchServices() {
+                async FetchServices() {
                     try {
                         const response = await this.api.get('/Info/services?namespaceName=' + this.selectedNamespace);
                         this.serviceItems = response.data; // Assuming the data is an array
@@ -308,7 +333,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async fetchLogs(pod) {
+                async FetchLogs(pod) {
                     try {
                         const response = await this.api.get('/Info/logs?podName=' + pod + '&namespaceName=' + this.selectedNamespace);
                         this.logStr = response.data; // Assuming the data is an array
@@ -316,7 +341,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async restartDeployment(deployment) {
+                async RestartDeployment(deployment) {
                     try {
                         const response = await this.api.post('/Info/restart', {
                             deploymentName: deployment,
@@ -327,7 +352,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async scaleDeployment(deployment) {
+                async ScaleDeployment(deployment) {
                     try {
                         const response = await this.api.post('/Info/scale', {
                             deploymentName: deployment,
@@ -339,7 +364,7 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                async handleIngress(service) {
+                async HandleIngress(service) {
                     try {
                         const response = await this.api.post('/Info/ingress', {
                             serviceName: service,
@@ -352,28 +377,27 @@
                         console.error('Error fetching data:', error);
                     }
                 },
-                handleDeployments(item) {
+                HandleDeployments(item) {
                     this.area = 'deployments';
                     this.selectedNamespace = item;
-                    this.fetchDeployments();
+                    this.FetchDeployments();
                     this.page = 1;
                 },
-                handlePods(item) {
+                HandlePods(item) {
                     this.area = 'pods';
                     this.selectedNamespace = item;
-                    this.fetchPods();
+                    this.FetchPods();
                     this.page = 1;
                 },
-                handleServices(item) {
+                HandleServices(item) {
                     this.area = 'services';
                     this.selectedNamespace = item;
-                    this.fetchServices();
+                    this.FetchServices();
                     this.page = 1;
                 },
-                handleLogs(item) {
-                    this.fetchLogs(item);
+                HandleLogs(item) {
+                    this.FetchLogs(item);
                 },
-
                 GetData(key) {
                     console.log("data", key, localStorage.getItem(key));
                     return localStorage.getItem(key);
@@ -392,7 +416,25 @@
                         confirmButtonText: 'OK'
                     });
                 },
-                Logout(){
+                Refresh() {
+                    this.FetchDatas();
+                },
+                ScheduleRefresh() {
+                    setInterval(() => {
+                        // Show SweetAlert for 3 seconds before calling refreshMethod
+                        Swal.fire({
+                            title: 'Refreshing in 3 seconds...',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            },
+                        }).then((result) => {
+                            this.Refresh();
+                        });
+                    }, 60000); // 60000 ms = 1 minute
+                },
+                Logout() {
                     this.DeleteData("apiAddress");
                     this.DeleteData("basicHeader");
                     // reload page
@@ -427,12 +469,13 @@
                     this.showLoginModal = false;
                 },
                 FetchDatas() {
-                    this.fetchNodeMetrics();
-                    this.fetchNamespaces();
+                    this.FetchNodeMetrics();
+                    this.FetchNamespaces();
                 }
             },
             mounted() {
                 this.CheckLogin();
+                this.ScheduleRefresh();
             }
         }).mount('#app');
     </script>
