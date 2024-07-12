@@ -1,7 +1,7 @@
 {
         "manifestVersion": 1,
         "id": "helloworldsadik",
-        "version": "1.0.12",
+        "version": "1.0.13",
         "name": "My First Set of Widgets",
         "description": "Samples containing different widgets extending dashboards",
         "publisher": "SadikSahin",

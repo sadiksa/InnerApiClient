@@ -154,7 +154,7 @@
                                                 <div class="col">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="Target"
-                                                            id="target" v-model="target">
+                                                            :id="'target-' + item" :ref="`targetInput-${item}`">
                                                         <button type="button" class="btn btn-success"
                                                             @click="ScaleDeployment(item)">Scale</button>
                                                     </div>
@@ -200,11 +200,13 @@
                                             <form>
                                                 <div class="mb-3">
                                                     <label for="port" class="form-label">Port</label>
-                                                    <input type="text" class="form-control" id="port" v-model="port">
+                                                    <input type="text" class="form-control" :id="'port-' + item"
+                                                        :ref="`portInput-${item}`">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="path" class="form-label">Path</label>
-                                                    <input type="text" class="form-control" id="path" v-model="path">
+                                                    <input type="text" class="form-control" :id="'path-' + item"
+                                                        :ref="`pathInput-${item}`">
                                                 </div>
                                             </form>
                                             <button type="button" class="btn btn-primary"
@@ -282,9 +284,6 @@
                     serviceItems: [],
                     selectedNamespace: '',
                     logStr: '',
-                    target: 1,
-                    port: 80,
-                    path: '/',
                     apiAddress: 'https://bootcamp.sadiksa.xyz/innerapi',
                     api: null
                 }
@@ -299,6 +298,7 @@
                     } catch (error) {
                         console.error('Error fetching data:', error);
                         this.metricsData = 'Failed to load data.';
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async FetchNamespaces() {
@@ -307,6 +307,7 @@
                         this.namespaceItems = response.data; // Assuming the data is an array
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async FetchDeployments() {
@@ -315,6 +316,7 @@
                         this.deploymentItems = response.data; // Assuming the data is an array
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async FetchPods() {
@@ -323,6 +325,7 @@
                         this.podItems = response.data; // Assuming the data is an array
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async FetchServices() {
@@ -331,6 +334,7 @@
                         this.serviceItems = response.data; // Assuming the data is an array
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async FetchLogs(pod) {
@@ -339,42 +343,55 @@
                         this.logStr = response.data; // Assuming the data is an array
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async RestartDeployment(deployment) {
                     try {
-                        const response = await this.api.post('/Info/restart', {
+                        const response = await this.api.post('/Change/restart', {
                             deploymentName: deployment,
                             namespaceName: this.selectedNamespace
                         });
                         console.log(response.data);
+                        this.ShowAlert("Success", response.data, "success");
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async ScaleDeployment(deployment) {
+                    const targetInputRef = this.$refs[`targetInput-${deployment}`][0]
+                    const target = targetInputRef.value;
                     try {
-                        const response = await this.api.post('/Info/scale', {
+                        const response = await this.api.post('/Change/scale', {
                             deploymentName: deployment,
                             namespaceName: this.selectedNamespace,
-                            target: this.target
+                            target: target
                         });
                         console.log(response.data);
+                        this.ShowAlert("Success", response.data, "success");
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 async HandleIngress(service) {
+                    const portInputRef = this.$refs[`portInput-${service}`][0];
+                    const pathInputRef = this.$refs[`pathInput-${service}`][0];
+                    const port = portInputRef.value;
+                    const path = pathInputRef.value;
                     try {
-                        const response = await this.api.post('/Info/ingress', {
+                        const response = await this.api.post('/Change/ingress', {
                             serviceName: service,
                             namespaceName: this.selectedNamespace,
-                            port: this.port,
-                            path: this.path
+                            servicePort: port,
+                            path: path
                         });
                         console.log(response.data);
+                        this.ShowAlert("Success", response.data, "success");
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                        this.ShowAlert("Error", error.response.data, "error");
                     }
                 },
                 HandleDeployments(item) {
@@ -408,19 +425,29 @@
                 DeleteData(key) {
                     localStorage.removeItem(key);
                 },
-                ShowAlert(title, text, icon) {
-                    Swal.fire({
+                ShowAlert(title, text, icon, timer = null) {
+                    let swalOptions = {
                         title: title,
                         text: text,
                         icon: icon,
                         confirmButtonText: 'OK'
-                    });
+                    };
+
+                    if (timer !== null) {
+                        swalOptions.timer = timer;
+                        swalOptions.timerProgressBar = true;
+                    }
+
+                    Swal.fire(swalOptions);
                 },
                 Refresh() {
                     this.FetchDatas();
                 },
                 ScheduleRefresh() {
                     setInterval(() => {
+                        if (this.page != 0) {
+                            return;
+                        }
                         // Show SweetAlert for 3 seconds before calling refreshMethod
                         Swal.fire({
                             title: 'Refreshing in 3 seconds...',
@@ -445,6 +472,7 @@
                     let apiAddress = this.GetData("apiAddress");
                     if (cred && apiAddress) {
                         this.basicHeader = cred;
+                        this.apiAddress = apiAddress;
                         this.api = axios.create({
                             baseURL: apiAddress,
                         })
@@ -471,6 +499,7 @@
                 FetchDatas() {
                     this.FetchNodeMetrics();
                     this.FetchNamespaces();
+                    this.ShowAlert("Success", "Datas are fetched successfully.", "success", 1000);
                 }
             },
             mounted() {
