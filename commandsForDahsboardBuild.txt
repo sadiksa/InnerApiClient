@@ -1,0 +1,6 @@
+lb5ipoxyjrd727rklhnlcgskcesmeqtr7jybabnnfikjdw72aaxq
+
+dashboard token
+
+
+tfx extension publish --share-with sadiksahin0511 --token lb5ipoxyjrd727rklhnlcgskcesmeqtr7jybabnnfikjdw72aaxq

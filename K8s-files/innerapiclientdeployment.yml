@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: innerapiclient-deployment
+  namespace: innerapi
+  labels:
+    app: innerapiclient
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: innerapiclient
+  template:
+    metadata:
+      labels:
+        app: innerapiclient
+    spec:
+      containers:
+      - name: innerapiclient-container
+        image: sadiksa/innerapiclient:$(Build.BuildNumber)
+        ports:
+        - containerPort: 80
+
