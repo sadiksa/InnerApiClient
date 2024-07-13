@@ -1,0 +1,37 @@
+trigger:
+- main  # or your specific branch
+
+variables:
+  # Docker Hub credentials
+  DOCKER_REGISTRY_SERVICE_CONNECTION: dockerhub
+  IMAGE_NAME: sadiksa/innerapiclient
+  DOCKERFILE_PATH: Dockerfile  # Path to your Dockerfile
+
+stages:
+- stage: BuildAndPush
+  jobs:
+  - job: Build
+    displayName: Build and Push Docker Image
+    pool:
+      name: buildernew
+
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: '$(DOCKER_REGISTRY_SERVICE_CONNECTION)'
+        repository: '$(IMAGE_NAME)'
+        command: 'buildAndPush'
+        Dockerfile: '$(DOCKERFILE_PATH)'
+        tags: |
+          $(Build.BuildNumber)
+      
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish deployment artifacts'
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/K8s-files/'
+        ArtifactName: 'k8s-ymls-for-innerapiclient'
+        publishLocation: 'Container'
+        targetPath: |
+          innerapiclientdeployment.yml
+          innerapiclientsvc.yml
+          innerapiclientingress.yml
