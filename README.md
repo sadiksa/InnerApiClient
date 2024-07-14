@@ -12,6 +12,8 @@ AWS faturasi yukselmesin diye kapalidir. Haber vermeniz halinde acabilirim.
 - Azure SDK Entegrasyonu
 - Authentication
 
+![Ui App](https://dev.azure.com/sadiksahin0511/743a559a-f65f-45e3-9750-c0f2d67c7ae1/_apis/git/repositories/4fe232e2-c01d-4cd3-a9e8-4ecd46da6947/items?path=/working_app_images/ui1.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=main&resolveLfs=true&%24format=octetStream&api-version=5.0)
+
 ### Dockerfile
 Docker NGINX image içinde statik HTML olarak çalışmaktadır. [Dockerfile](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApiClient?path=/Dockerfile&version=GBmain)
 
