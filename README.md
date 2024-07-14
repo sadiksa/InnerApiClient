@@ -1,6 +1,8 @@
 # InnerApi Uygulaması UI
-InnerApi uygulamasının UI uygulamasıdır. Azure DevOps dashboard entegrasyonu yapılmıştır ve oraya da deploy edilebilir.
-Bu uygulama farklı InnerApi'ler ile çalışabilir.
+InnerApi uygulamasının UI uygulamasıdır. Azure DevOps dashboard entegrasyonu yapılmıştır ve oraya da deploy edilebilir. \
+Bu uygulama farklı InnerApi'ler ile çalışabilir. \
+[https://bootcamp.sadiksa.xyz/innerapiclient](https://bootcamp.sadiksa.xyz/innerapiclient) \
+AWS faturasi yukselmesin diye kapalidir. Haber vermeniz halinde acabilirim.
 
 ### İçerik
 - Dockerfile
