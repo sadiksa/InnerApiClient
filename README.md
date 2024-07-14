@@ -2,7 +2,9 @@
 InnerApi uygulamasının UI uygulamasıdır. Azure DevOps dashboard entegrasyonu yapılmıştır ve oraya da deploy edilebilir. \
 Bu uygulama farklı InnerApi'ler ile çalışabilir. \
 [https://bootcamp.sadiksa.xyz/innerapiclient](https://bootcamp.sadiksa.xyz/innerapiclient/index.html) \
-AWS faturasi yukselmesin diye kapalidir. Haber vermeniz halinde acabilirim.
+AWS faturasi yukselmesin diye kapalidir. Haber vermeniz halinde acabilirim. \
+\
+Uygulamanin ve pipelinelarin calisan imagelari icin [/working_app_images](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApiClient?path=/working_app_images&version=GBmain) klasorune gidebilirsiniz.
 
 ## Uygulamanin Yetenekleri
 InnerApi readme dosyasina bakabilirsiniz. [Link](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApi)
