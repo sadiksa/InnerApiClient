@@ -6,14 +6,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/use-regex: "true"   # Optional: Use regex for more control
-    nginx.ingress.kubernetes.io/proxy-body-size: 50m  # Adjust body size if needed
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600s"  # Adjust timeouts if needed
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600s"   # Adjust timeouts if needed
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      location ~* \.(svg)$ {
-        root /usr/share/nginx/html;
-      }
 spec:
   rules:
     - http:
