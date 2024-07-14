@@ -9,6 +9,9 @@ Uygulamanin ve pipelinelarin calisan imagelari icin [/working_app_images](https:
 ## Uygulamanin Yetenekleri
 InnerApi readme dosyasina bakabilirsiniz. [Link](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApi)
 
+## Birlestirilmis gorsel
+![InnerApi](https://i.ibb.co/y8ZDrqh/project-general.png)
+
 ### İçerik
 - Dockerfile
 - Kubernetes Deployment, Service ve Ingress Dosyaları
