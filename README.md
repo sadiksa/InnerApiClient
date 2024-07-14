@@ -1,20 +1,29 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# InnerApi Uygulaması UI
+InnerApi uygulamasının UI uygulamasıdır. Azure DevOps dashboard entegrasyonu yapılmıştır ve oraya da deploy edilebilir.
+Bu uygulama farklı InnerApi'ler ile çalışabilir.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# İçerik
+Dockerfile
+Kubernetes Deployment, Service ve Ingress Dosyaları
+Azure DevOps Dashboard Publish
+Vue.js Kullanımı
+Azure SDK Entegrasyonu
+Authentication
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Dockerfile
+Docker NGINX image içinde statik HTML olarak çalışmaktadır. [Dockerfile](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApiClient?path=/Dockerfile&version=GBmain)
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+# Kubernetes Deployment, Service ve Ingress Dosyaları
+Kubernetes deployment, service ve ingress dosyaları [K8s-files](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApiClient?path=/K8s-files&version=GBmain) altındadır.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+# Azure DevOps Dashboard Publish
+Azure DevOps Dashboard publish için [commandsForDahsboardBuild.txt dosyasını](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApiClient?path=/commandsForDahsboardBuild.txt&version=GBmain) kullanabilirsiniz. Ancak PAT kısmını değiştirmeniz gerekmektedir.
+
+# Vue.js Kullanımı
+İçinde Vue.js script.src (Using Vue from CDN) şeklinde çalışmaktadır. Daha fazla bilgi için [bu makaleyi](https://medium.com/berkut-teknoloji/using-vuejs-instead-of-jquery-with-net-mvc-403d976e0c12) inceleyebilirsiniz.
+
+# Azure SDK Entegrasyonu
+Azure SDK entegrasyonu yapılmıştır. Daha fazla bilgi için [vss-extension.json](https://dev.azure.com/sadiksahin0511/bootcamp/_git/InnerApiClient?path=/vss-extension.json&version=GBmain) dosyasına bakabilirsiniz.
+
+# Authentication
+Auth bilgileri Basic Authentication şeklinde çalışmaktadır.
