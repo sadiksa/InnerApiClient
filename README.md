@@ -4,6 +4,18 @@ Bu uygulama farklı InnerApi'ler ile çalışabilir. \
 [https://bootcamp.sadiksa.xyz/innerapiclient](https://bootcamp.sadiksa.xyz/innerapiclient/index.html) \
 AWS faturasi yukselmesin diye kapalidir. Haber vermeniz halinde acabilirim.
 
+## Uygulamanin Yetenekleri
+1. Node **Metric**lerini izleme
+    - CPU
+    - Memory
+2. Deploymentlari yonetme (namespace bazinda)
+    - Deploy **restart** edebilme
+    - Istenilen sayiya **Scale** edebilme
+3. Podlari yonetme ve izleme (namespace bazinda)
+    - **Log**lari gosterebilme
+4. Serviceleri yonetme (namespace bazinda)
+    - istenilen path ve port icin yeni **ingress** ekleyebilme
+
 ### İçerik
 - Dockerfile
 - Kubernetes Deployment, Service ve Ingress Dosyaları
